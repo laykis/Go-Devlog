@@ -30,7 +30,9 @@ func main() {
 	}(db)
 
 	//// DB 마이그레이션 (User 모델 자동 생성)
-	//db.AutoMigrate(&handlers.User{})
+	//if err := db.AutoMigrate(&models.User{}); err != nil {
+	//	log.Fatal("Error migrating database:", err)
+	//}
 
 	// Gin 라우터 설정
 	r := gin.Default()

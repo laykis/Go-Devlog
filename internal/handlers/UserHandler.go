@@ -1,19 +1,12 @@
 package handlers
 
 import (
+	"devlog/internal/models"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"net/http"
 	"time"
 )
-
-type User struct {
-	Id           int       `json:"id"`
-	UserName     string    `json:"userName" binding:"required"`
-	UserPassword string    `json:"userPassword" binding:"required"`
-	RegisterDate time.Time `json:"registerDate"`
-	UseYn        string    `json:"useYn"`
-}
 
 type UserHandler struct {
 	DB *gorm.DB
@@ -24,12 +17,15 @@ func NewUserHandler(db *gorm.DB) *UserHandler {
 }
 
 func (h *UserHandler) CreateUser(c *gin.Context) {
-	var user User
+	var user models.User
 
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	user.RegisterDate = time.Now()
+	user.UseYn = "Y"
 
 	if err := h.DB.Create(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
