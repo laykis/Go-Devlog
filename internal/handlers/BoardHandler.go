@@ -12,8 +12,8 @@ type BoardHandler struct {
 	DB *gorm.DB
 }
 
-func NewBoardHandler(db *gorm.DB) *UserHandler {
-	return &UserHandler{DB: db}
+func NewBoardHandler(db *gorm.DB) *BoardHandler {
+	return &BoardHandler{DB: db}
 }
 
 func (b *BoardHandler) BoardCreate(c *gin.Context) {
