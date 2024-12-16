@@ -39,9 +39,17 @@ func main() {
 
 	// DB 인스턴스를 핸들러에 전달
 	userHandler := handlers.NewUserHandler(db)
+	boardHandler := handlers.NewBoardHandler(db)
 
 	// 라우팅 설정
 	r.POST("/user", userHandler.CreateUser)
+
+	r.POST("/board/write", boardHandler.BoardWrite)
+	r.POST("/board/read", boardHandler.BoardRead)
+	r.POST("/board/delete", boardHandler.BoardDelete)
+	r.POST("/board/fix", boardHandler.BoardFix)
+	r.POST("/board/list", boardHandler.BoardList)
+
 	r.GET("/hello", func(c *gin.Context) {
 		fmt.Fprintln(c.Writer, "Hello World")
 	})
