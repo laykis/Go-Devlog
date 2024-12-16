@@ -1,0 +1,6 @@
+local:
+  db_user: "root"
+  db_pass: "root"
+  db_host: "192.168.64.9"
+  db_port: 3306
+  db_name: "devlog"
