@@ -18,9 +18,17 @@ func NewUserHandler(db *gorm.DB) *UserHandler {
 
 func (h *UserHandler) CreateUser(c *gin.Context) {
 	var user models.User
+	var searchUser models.User
 
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	result := h.DB.Where("user_name = ? AND use_yn = ?", user.UserName, "Y").Find(&searchUser)
+
+	if result.RowsAffected > 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User already exists"})
 		return
 	}
 
@@ -46,7 +54,7 @@ func (h *UserHandler) Login(c *gin.Context) {
 	result := h.DB.Where("user_name = ? AND use_yn = ?", user.UserName, "Y").Find(&searchUser)
 
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "존재하지 않는 아이디입니다."})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "존재하지 않는 아이디입니다."})
 	} else {
 		if searchUser.UserName != "" {
 			if searchUser.UserName != user.UserName || searchUser.UserPassword != user.UserPassword {
