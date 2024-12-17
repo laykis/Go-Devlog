@@ -32,6 +32,13 @@ func (r *ApiResponse) OkResp() *ApiResponse {
 	return r
 }
 
+func (r *ApiResponse) OkRespWithData(data interface{}) *ApiResponse {
+	r.Code = STATUS_SUCCESS_CODE
+	r.Message = STATUS_SUCCESS_MSG
+	r.Data = data
+	return r
+}
+
 func (r *ApiResponse) FailResp(err error) *ApiResponse {
 
 	r.Code = STATUS_FAIL_CODE
@@ -96,6 +103,14 @@ func (r *ApiResponse) LoginFailResp() *ApiResponse {
 	r.Code = STATUS_FAIL_CODE
 	r.Message = STATUS_FAIL_MSG
 	r.Data = "아이디 혹은 패스워드 오류입니다."
+
+	return r
+}
+
+func (r *ApiResponse) BoardNotExistResp() *ApiResponse {
+	r.Code = STATUS_BOARD_NOT_EXIST_CODE
+	r.Message = STATUS_BOARD_NOT_EXIST_MSG
+	r.Data = "존재하지 않는 게시판입니다."
 
 	return r
 }

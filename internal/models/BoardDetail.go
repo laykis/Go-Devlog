@@ -6,6 +6,7 @@ type BoardDetail struct {
 	Id           int       `json:"id" gorm:"column:id;primaryKey;autoIncrement"`
 	UserId       int       `json:"userId" binding:"required" gorm:"column:user_id"`
 	BoardId      int       `json:"boardId" binding:"required" gorm:"column:board_id"`
+	BoardTitle   string    `json:"boardTitle" binding:"required" gorm:"column:board_title"`
 	BoardContent string    `json:"boardContent" binding:"required" gorm:"column:board_content"`
 	RegisterDate time.Time `json:"registerDate" gorm:"column:register_date"`
 	UpdateDate   time.Time `json:"updateDate" gorm:"column:update_date"`
