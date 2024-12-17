@@ -21,25 +21,20 @@ func (b *BoardHandler) BoardCreate(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&board); err != nil {
 
-		response := constant.NewApiResponse()
-		response.Code = constant.STATUS_BAD_REQUEST_CODE
-		response.Message = constant.STATUS_BAD_REQUEST_MSG
-		response.Data = err.Error()
-		
+		response := constant.NewApiResponse().BadReqResp(err)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
 	if err := b.DB.Create(&board).Error; err != nil {
 
-		response := constant.NewApiResponse()
-		response.Code = constant.STATUS_INTERNAL_DB_ERROR_CODE
-		response.Message = constant.STATUS_INTERNAL_DB_ERROR_MSG
-		response.Data = err.Error()
-
+		response := constant.NewApiResponse().InternalDbErrorResp(err)
 		c.JSON(http.StatusInternalServerError, response)
 		return
 	}
+
+	response := constant.NewApiResponse().OkResp()
+	c.JSON(http.StatusOK, response)
 }
 
 func (b *BoardHandler) BoardDelete(c *gin.Context) {
