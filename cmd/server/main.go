@@ -44,10 +44,8 @@ func main() {
 	// 라우팅 설정
 	r.POST("/user", userHandler.CreateUser)
 
-	r.POST("/board/write", boardHandler.BoardWrite)
-	r.POST("/board/read", boardHandler.BoardRead)
+	r.POST("/board/write", boardHandler.BoardDetailWrite)
 	r.POST("/board/delete", boardHandler.BoardDelete)
-	r.POST("/board/fix", boardHandler.BoardFix)
 	r.POST("/board/list", boardHandler.BoardList)
 
 	r.GET("/hello", func(c *gin.Context) {
